@@ -1,7 +1,10 @@
 let dateElement = document.querySelector(".date");
 let todosElement = document.querySelector(".todos");
+let formElement = document.querySelector(".add-todo-container");
 let addTodoInputElement = document.querySelector(".add-todo-input");
+let addTodoDateElement = document.querySelector(".add-todo-date");
 let addTodoButtonElement = document.querySelector(".add-todo-button");
+
 let checkboxElement;
 
 // Formatting date
@@ -11,8 +14,8 @@ dateElement.innerText = `${date.slice(0,3)}, ${date.slice(4, 10)}, ${date.slice(
 
 let todos = [];
 let todo = {
-    description: "Code wars for 2 hours",
-    duration: "2 hours",
+    description: "Code wars",
+    duration: "2",
     completed: false
 };
 todos.push(todo);
@@ -31,23 +34,23 @@ function addTodo(){
     if(addTodoInputElement.value.trim()){
         todos.push({
             description: addTodoInputElement.value.trim(),
+            duration: addTodoDateElement.value.trim(),
             completed: false
         })
 
         addTodoInputElement.value = "";
+        addTodoDateElement.value = "";
     }
 }
 
-addTodoInputElement.addEventListener("keydown", event =>{
-    if(event.keyCode === 13){
-        addTodo();
-        render();
-    }
+addTodoButtonElement.addEventListener("click", ()=>{
+    addTodo();
+    render();
 })
-addTodoButtonElement.addEventListener("onClick", ()=>{
-        addTodo();
-        render();
-})
+
+formElement.addEventListener("submit", event =>{
+    event.preventDefault();
+});
 
 // rendering todos on screen
 function render(){
@@ -59,12 +62,12 @@ function render(){
             if(todo.completed){
                 todosElement.innerHTML+=`<div class="todo-item completed">
                                         <input type="checkbox" id="todo-item-${index}" checked>
-                                        <label for="todo-item-${index}">${todo.description}</label>        
+                                        <label for="todo-item-${index}">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""} hrs</label>        
                                     </div>`
             } else{
                 todosElement.innerHTML+=`<div class="todo-item">
                                         <input type="checkbox" id="todo-item-${index}">
-                                        <label for="todo-item-${index}">${todo.description}</label>        
+                                        <label for="todo-item-${index}">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""}</label>        
                                     </div>`
             }
 

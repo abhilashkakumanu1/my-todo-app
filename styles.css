@@ -24,21 +24,28 @@ body{
     padding: 10px;
 }
 
-.add-todo-input{
+.add-todo-input,
+.add-todo-date{
     border: hidden;
     border-bottom: 1px dotted black;
     outline: none;
-    width: 500px;
     font-family: "Coming Soon", cursive;
     font-size: 24px;
     text-align: center;
 }
+.add-todo-input{
+    width: 350px;
+}
+.add-todo-date{
+    width: 100px;
+}
 
-.add-todo-input:focus{
+.add-todo-input:focus,
+.add-todo-date:focus{
     border-bottom: 1px solid black;
 }
 
-.add-todo-container label{
+.add-todo-container button{
     font-size: 25px;
     color: grey;   
 }
