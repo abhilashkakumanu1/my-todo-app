@@ -52,12 +52,12 @@ body{
 
 
 /* ---------------- ToDos ---------------- */
-.todo-item input{
+input[type="checkbox"]{
     width: 20px;
     height: 20px;
 }
 
-input:checked + label{
+input:checked + span{
     text-decoration: line-through;
     color: grey;
 }

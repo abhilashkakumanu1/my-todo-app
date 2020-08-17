@@ -3,82 +3,93 @@ let todosElement = document.querySelector(".todos");
 let formElement = document.querySelector(".add-todo-container");
 let addTodoInputElement = document.querySelector(".add-todo-input");
 let addTodoDateElement = document.querySelector(".add-todo-date");
-let addTodoButtonElement = document.querySelector(".add-todo-button");
 
-let checkboxElement;
+let todos = [];
+let todo;
+
 
 // Formatting date
 const date = new Date().toDateString();
 dateElement.innerText = `${date.slice(0,3)}, ${date.slice(4, 10)}, ${date.slice(10)}`;
 
-
-let todos = [];
-let todo = {
-    description: "Code wars",
-    duration: "2",
-    completed: false
-};
-todos.push(todo);
-
-// Event handler functions
-
-function toggleCheckbox(checkboxElement){
-    if(checkboxElement.checked){
-        checkboxElement.checked = false;
-    } else{
-        checkboxElement.checked = true;
+// rendering todos on screen for the first time
+function render(){
+    todosElement.innerHTML = "";
+    if(todos.length!==0){
+        todos.forEach((todo, index) => {
+            todosElement.innerHTML+=generateHTML(todo, index);
+        });
     }
+}
+render();
+
+// function definitions
+function generateHTML(todo, index){
+    
+    if(todo.completed){
+        return(`<div class="todo-item-${index}">
+                <input type="checkbox" class="todo-checkbox" checked>
+                <span class="todo-span">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""}</span>
+                <i class="fas fa-times-circle todo-cross"></i>       
+            </div>`); 
+    } else{
+        return(`<div class="todo-item-${index}">
+                <input type="checkbox" class="todo-checkbox">
+                <span class="todo-span">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""}</span>
+                <i class="fas fa-times-circle todo-cross"></i>       
+            </div>`); 
+    }
+          
 }
 
 function addTodo(){
     if(addTodoInputElement.value.trim()){
-        todos.push({
-            description: addTodoInputElement.value.trim(),
-            duration: addTodoDateElement.value.trim(),
+        let description = addTodoInputElement.value.trim();
+        let duration = addTodoDateElement.value.trim()
+        todo = {
+            description,
+            duration,
             completed: false
-        })
+        };
+        //Adding to the todos array
+        todos.push(todo);
+        render();
 
+        //Clearing the input box after adding
         addTodoInputElement.value = "";
         addTodoDateElement.value = "";
     }
 }
 
-addTodoButtonElement.addEventListener("click", ()=>{
-    addTodo();
+//deleting from todos and rendering
+function deleteTodo(todoElement){
+    var id = parseInt(todoElement.className[todoElement.className.length-1]);
+    todos.splice(id, 1);
     render();
-})
+}
+
+//Toggling checbox
+function toggleCheckbox(checkboxElement, todoElement){
+    var id = parseInt(todoElement.className[todoElement.className.length-1]);
+    todos[id].completed = checkboxElement.checked;
+}
+
+// Event listeners
 
 formElement.addEventListener("submit", event =>{
     event.preventDefault();
+    addTodo();
 });
 
-// rendering todos on screen
-function render(){
-    todosElement.innerHTML = "";
 
-    if(todos){
-        todosElement.innerHTML = "<div class='todos-heading'>ToDos</div>";
-        todos.forEach((todo, index) => {
-            if(todo.completed){
-                todosElement.innerHTML+=`<div class="todo-item completed">
-                                        <input type="checkbox" id="todo-item-${index}" checked>
-                                        <label for="todo-item-${index}">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""} hrs</label>        
-                                    </div>`
-            } else{
-                todosElement.innerHTML+=`<div class="todo-item">
-                                        <input type="checkbox" id="todo-item-${index}">
-                                        <label for="todo-item-${index}">${todo.description} ${todo.duration? "for "+todo.duration+" hrs":""}</label>        
-                                    </div>`
-            }
+todosElement.addEventListener("click", function(event){
+    // Clicked on cross
+    if(event.target.classList.contains("todo-cross")){
+        deleteTodo(event.target.parentNode)
+    }
 
-            // Adding event listener to dynamically created elements - I didn't know that we cant directly add event listeners to dynamically created elements
-            
-            checkboxElement = document.querySelector(`#todo-item-${index}`);
-            checkboxElement.addEventListener("onClick", ()=>{
-                toggleCheckbox(checkboxElement);
-            })
-            
-        })
-    }  
-}
-render();
+    //Toggle checkbox
+    if(event.target.classList.contains("todo-checkbox")){
+        toggleCheckbox(event.target, event.target.parentNode);
+    }
+})
