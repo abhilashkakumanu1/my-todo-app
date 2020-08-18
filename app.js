@@ -4,6 +4,8 @@ let formElement = document.querySelector(".add-todo-container");
 let addTodoInputElement = document.querySelector(".add-todo-input");
 let addTodoDateElement = document.querySelector(".add-todo-date");
 
+let selectPersonElement = document.querySelector(".select-person");
+
 let todos = [];
 let todo;
 
@@ -75,7 +77,6 @@ function toggleCheckbox(checkboxElement, todoElement){
 }
 
 // Event listeners
-
 formElement.addEventListener("submit", event =>{
     event.preventDefault();
     addTodo();
@@ -91,5 +92,16 @@ todosElement.addEventListener("click", function(event){
     //Toggle checkbox
     if(event.target.classList.contains("todo-checkbox")){
         toggleCheckbox(event.target, event.target.parentNode);
+    }
+})
+
+//Select person
+selectPersonElement.addEventListener("click", ()=>{
+    document.body.classList.toggle("abhi");
+    console.log(selectPersonElement.innerText);
+    if(selectPersonElement.innerText==="Jo"){
+        selectPersonElement.innerText = "Abhi";
+    } else{
+        selectPersonElement.innerText="Jo";
     }
 })

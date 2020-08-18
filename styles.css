@@ -1,43 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
 
 *{
     box-sizing: border-box;
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 body{
     margin: 0 auto;
-    width: 90%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 95%;
+    background-color: rgb(190, 224, 253);
+    text-align: center;
     font-size: 2rem;    
-    font-family: "Coming Soon", cursive;
+    font-family: "Caveat", cursive;
+}
+body.abhi{
+    background-color: rgb(110, 253, 91);
 }
 
-#select-person{
-    width: 200px;
-    text-align-last: center;
-    padding: 10px;
+.date{
+    margin: 50px auto;
+    width: max-content;
+    border-bottom: 2px solid black;
 }
-
+.select-person{
+    width: max-content;
+    margin: 50px auto;
+    padding: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;    
+    box-shadow: 7px 7px 13px -1px rgba(0,0,0,0.66);
+}
+.add-todo-container{
+    margin-bottom: 50px;
+}
 .add-todo-input,
 .add-todo-date{
     border: hidden;
     border-bottom: 1px dotted black;
     outline: none;
-    font-family: "Coming Soon", cursive;
+    font-family: "Caveat", cursive;
     font-size: 24px;
     text-align: center;
 }
 .add-todo-input{
-    width: 350px;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 5px;
 }
 .add-todo-date{
-    width: 100px;
+    width: 20%;
+    max-width: 150px;
+    border-radius: 5px;
 }
 
 .add-todo-input:focus,
@@ -45,13 +59,25 @@ body{
     border-bottom: 1px solid black;
 }
 
-.add-todo-container button{
+.add-todo-button{
     font-size: 25px;
-    color: grey;   
+    background-color: transparent;
+    border: none;
+    outline: none;  
 }
 
 
 /* ---------------- ToDos ---------------- */
+.todos-container{
+    width: 100%;
+}
+.todos-heading{
+    margin: 25px auto;
+    width: max-content;
+    border-bottom: 2px solid black;
+}
+
+
 input[type="checkbox"]{
     width: 20px;
     height: 20px;
